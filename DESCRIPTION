@@ -1,0 +1,20 @@
+Package: ggdose
+Title: Plot dose response curve
+Version: 0.0.0.1
+Authors@R: 
+    person("Yuhao", "Min", , "min.yuhao@mayo.edu", role = c("aut", "cre"))
+Description: Plot dose-response curve using the underlying data from ggplot.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.3
+Depends: 
+    drc,
+    ggplot2,
+    dplyr,
+    magrittr,
+    tidyr
+Suggests: 
+    testthat (>= 3.0.0),
+    vdiffr
+Config/testthat/edition: 3
