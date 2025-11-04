@@ -1,0 +1,89 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# ggdose
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+ggdose provides a layer to calculate dose response relations in ggplot. It relies on the [drc](https://cran.r-project.org/web/packages/drc/index.html) package to handle the math.
+
+## Installation
+
+You can install the development version of ggdose from [GitHub](https://github.com/myuhao/ggdose) with:
+
+``` r
+devtools::install_github("myuhao/ggdose")
+```
+
+## Example
+
+Use `geom_4PL()` in ggplot. It will plot the dose response curve for you. The EC50 values will be plotted in the upper right corner.
+
+```{r example, warning=FALSE}
+library(ggdose)
+library(ggplot2)
+
+drc::ryegrass |>
+  ggplot(aes(x = conc, y = rootl)) +
+  geom_4PL()
+
+```
+
+Within the same panel, different group (color/fill) will be treated separately.
+
+```{r, warning=FALSE}
+list(
+  foo = drc::ryegrass,
+  bar = dplyr::mutate(drc::ryegrass, rootl = 10 - rootl)
+) |>
+  dplyr::bind_rows(.id = "grp") |>
+  ggplot(aes(x = conc, y = rootl)) +
+  geom_4PL(aes(color = grp))
+  
+
+
+```
+
+
+`geom_4PL()` ignore all transformation made with the x axis, such as `scale_x_log10()`.
+
+```{r, warning=FALSE}
+
+scale_1 = drc::ryegrass |>
+  ggplot(aes(x = conc, y = rootl)) +
+  geom_4PL() +
+  labs(title = "linear scale")
+
+scale_2 = drc::ryegrass |>
+  ggplot(aes(x = conc, y = rootl)) +
+  geom_4PL() + 
+  scale_x_log10() +
+  labs(title = "log scale")
+
+patchwork::wrap_plots(scale_1, scale_2, ncol = 2)
+
+```
+
+`geom_4PL()` does not plot individual data point that are used for the dose response relation. Use it in conjunction with other geom to achieve the desired look.
+
+```{r, warning=FALSE}
+
+drc::ryegrass |>
+  ggplot(aes(x = conc, y = rootl)) +
+  geom_pointrange(stat = StatSummary) +
+  geom_4PL()
+
+```
