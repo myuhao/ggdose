@@ -81,13 +81,16 @@ Geom4PL = ggproto(
 #' @rdname four-PL
 #' @export
 geom_4PL = function(
-    geom = Geom4PL,
+    mapping = NULL,
+    data = NULL,
     stat = Stat4PL,
     position = position_identity(),
     fct = drc::LL.4(names = c("Slope", "Lower Limit", "Upper Limit", "EC50"))
 ) {
   layer(
-    geom = geom,
+    mapping = mapping,
+    data = data,
+    geom = Geom4PL,
     stat = stat,
     position = position,
     params = list(
