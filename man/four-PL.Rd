@@ -13,7 +13,8 @@ stat_4PL(
 )
 
 geom_4PL(
-  geom = Geom4PL,
+  mapping = NULL,
+  data = NULL,
   stat = Stat4PL,
   position = position_identity(),
   fct = drc::LL.4(names = c("Slope", "Lower Limit", "Upper Limit", "EC50"))

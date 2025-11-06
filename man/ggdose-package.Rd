@@ -8,6 +8,13 @@
 \description{
 Plot dose-response curve using the underlying data from ggplot.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{http://www.myuhao.com/ggdose/}
+}
+
+}
 \author{
 \strong{Maintainer}: Yuhao Min \email{min.yuhao@mayo.edu}
 
