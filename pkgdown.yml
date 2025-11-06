@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.3
 pkgdown_sha: ~
 articles: {}
-last_built: 2025-11-04T22:31Z
+last_built: 2025-11-06T21:22Z
 urls:
   reference: http://www.myuhao.com/ggdose/reference
   article: http://www.myuhao.com/ggdose/articles
