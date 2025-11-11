@@ -87,3 +87,14 @@ drc::ryegrass |>
   geom_4PL()
 
 ```
+
+
+The location of the EC50 values can be fine tuned use the `x_offset` and `y_offset` parameters in `geom_4PL()`
+
+```{r, warning=FALSE}
+
+drc::ryegrass |>
+  ggplot(aes(x = conc, y = rootl)) +
+  geom_4PL(x_offset = 0.5)
+
+```

@@ -17,7 +17,10 @@ geom_4PL(
   data = NULL,
   stat = Stat4PL,
   position = position_identity(),
-  fct = drc::LL.4(names = c("Slope", "Lower Limit", "Upper Limit", "EC50"))
+  fct = drc::LL.4(names = c("Slope", "Lower Limit", "Upper Limit", "EC50")),
+  x_offset = 0,
+  y_offset = 0,
+  ...
 )
 }
 \arguments{
@@ -31,6 +34,10 @@ geom_4PL(
   \code{\link[drc]{LL.4}}, \code{\link[drc]{LL.5}} and the Weibull model \code{\link[drc]{W1.4}}. Use
   \code{\link[drc]{getMeanFunctions}} for a full list.}
   }}
+
+\item{x_offset}{A number from 0 to 1 to specifiy how much offset the label should be}
+
+\item{y_offset}{A number from 0 to 1 to specifiy how much offset the label should be}
 }
 \description{
 This stat will fit a 4PL line using \code{drc::drm()}.

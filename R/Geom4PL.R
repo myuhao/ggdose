@@ -2,7 +2,7 @@
 
 Stat4PL = ggproto(
   "Stat4PL", Stat,
-  compute_group = function(data, scales, fct) {
+  compute_group = function(data, scales, fct, ...) {
     # First inverse any transformation to the x as the model.
     data$x1 = scales$x$get_transformation()$inverse(data$x)
 
@@ -66,26 +66,34 @@ stat_4PL = function(
 
 Geom4PL = ggproto(
   "Geom4PL", GeomLine,
-  draw_panel = function(data, panel_params, coord, ...) {
+  extra_params = c("x_offset", "y_offset"),
+  draw_panel = function(data, panel_params, coord, x_offset = 0, y_offset = 0) {
     data2 = data %>%
-      .get_group_location(panel_params$x.range, panel_params$y.range)
+      .get_group_location(panel_params$x.range, panel_params$y.range, x_offset, y_offset)
     # print(data2)
     grid::gList(
-      GeomLine$draw_panel(data, panel_params, coord, ...),
-      GeomText$draw_panel(data2, panel_params, coord, ...)
+      GeomLine$draw_panel(data, panel_params, coord),
+      GeomText$draw_panel(data2, panel_params, coord)
     )
   }
 )
 
 
 #' @rdname four-PL
+#'
+#' @param x_offset A number from 0 to 1 to specifiy how much offset the label should be
+#' @param y_offset A number from 0 to 1 to specifiy how much offset the label should be
+#'
 #' @export
 geom_4PL = function(
     mapping = NULL,
     data = NULL,
     stat = Stat4PL,
     position = position_identity(),
-    fct = drc::LL.4(names = c("Slope", "Lower Limit", "Upper Limit", "EC50"))
+    fct = drc::LL.4(names = c("Slope", "Lower Limit", "Upper Limit", "EC50")),
+    x_offset = 0.01,
+    y_offset = 0.01,
+    ...
 ) {
   layer(
     mapping = mapping,
@@ -94,7 +102,10 @@ geom_4PL = function(
     stat = stat,
     position = position,
     params = list(
-      fct = fct
+      fct = fct,
+      x_offset = x_offset,
+      y_offset = y_offset,
+      ...
     )
   )
 }
@@ -112,7 +123,7 @@ geom_4PL = function(
 
 
 #' @keywords internal
-.get_group_location = function(data, x.range, y.range, ...) {
+.get_group_location = function(data, x.range, y.range, x_offset = 0, y_offset = 0) {
   x0 = x.range[1]
   x1 = x.range[2]
   y1 = y.range[2]
@@ -126,11 +137,11 @@ geom_4PL = function(
     distinct(group, .keep_all = TRUE) %>%
     mutate(
       label = scales::label_number_auto()(EC50),
-      x = x0 + x_distance * 0.05, # x poistion, offset by 0.05 of the total x length
-      y = y1 - y_distance * 0.05, # initial y position, with offset
+      x = x0 + x_distance * x_offset, # x poistion, offset by 0.05 of the total x length
+      y = y1 - y_distance * y_offset, # initial y position, with offset
       angle = 0,
       hjust = 0,
-      vjust = 0 + step * (row_number() - 1) # increment by step for each row using vjust
+      vjust = 1 + step * (row_number() - 1) # increment by step for each row using vjust
     )
 }
 

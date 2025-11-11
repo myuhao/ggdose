@@ -29,4 +29,22 @@ test_that("Test Geom4PL", {
     "Geom4PL with log Transform",
     base_plot + scale_x_log10()
   )
+
+  vdiffr::expect_doppelganger(
+    "Gem4PL Offset Works",
+    drc::ryegrass %>%
+      mutate(
+        rootl = 10 - rootl,
+        ...group = "...gggg"
+      ) %>%
+      bind_rows(
+        drc::ryegrass
+      ) %>%
+      mutate(
+        ...facet = "...ffff",
+      ) %>%
+      ggplot(aes(x = conc, y = rootl, group = ...group, color = ...group)) +
+      geom_4PL(x_offset = 0.5) +
+      facet_grid(rows = vars(...facet), cols = vars("a"), scale = "free_y")
+  )
 })

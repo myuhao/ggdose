@@ -1,6 +1,6 @@
 Package: ggdose
 Title: Plot dose response curve
-Version: 0.0.0.1
+Version: 0.0.1.0
 Authors@R: 
     person("Yuhao", "Min", , "min.yuhao@mayo.edu", role = c("aut", "cre"))
 Description: Plot dose-response curve using the underlying data from ggplot.

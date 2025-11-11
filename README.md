@@ -118,3 +118,15 @@ drc::ryegrass |>
 ```
 
 <img src="man/figures/README-unnamed-chunk-4-1.png" width="100%" />
+
+The location of the EC50 values can be fine tuned use the `x_offset` and
+`y_offset` parameters in `geom_4PL()`
+
+``` r
+
+drc::ryegrass |>
+  ggplot(aes(x = conc, y = rootl)) +
+  geom_4PL(x_offset = 0.5)
+```
+
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
